@@ -1,0 +1,9 @@
+*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}
+:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}
+body{margin:0;padding:0;line-height:inherit;font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+background:#ffd1d1 url(https://laravel.com/assets/img/welcome/background.svg) center / cover no-repeat}
+input{max-width:12rem;font-size:1rem;background:rgb(255 205 205 / 50%);padding:.5rem 1.25rem;border:0;border-radius:1rem;}input[type=number]{max-width:10rem;}
+.btn{padding:.65rem 1.5rem;border-radius:.5rem;cursor:pointer;background:#ff7f77;
+;color:inherit;text-decoration:none;}.btn:hover{background:#ff564c}
+/*form{padding:3rem;border-radius:1rem;box-shadow:0px 14px 34px rgba(0,0,0,.5); background: white}*/
+.container{display: flex;justify-content:center;min-height:100vh;}
