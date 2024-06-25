@@ -3,12 +3,26 @@
 use App\Models\Payment;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaypalController;
+use App\Http\Controllers\StripeController;
 
-Route::get('/', function () {
-    return dd(Payment::all()->toArray());
-});
 Route::view('/', 'welcome');
+Route::view('failed', 'failed')->name('failed');
+// Route::view('success', 'success')->name('success');
 
-Route::post('paypal', [PaypalController::class, 'paypal'])->name('paypal');
-Route::get('success', [PaypalController::class, 'success'])->name('success');
-Route::get('cancel', [PaypalController::class, 'cancel'])->name('cancel');
+Route::group([
+    'as' => 'paypal.',
+    'prefix' => 'paypal',
+    'controller' => PaypalController::class
+], function() {
+    Route::post('/', 'paypal')->name('index');
+    Route::get('transaction', 'transaction')->name('transaction');
+});
+
+Route::group([
+    'as' => 'stripe.',
+    'prefix' => 'stripe',
+    'controller' => StripeController::class
+], function() {
+    Route::post('/', 'stripe')->name('index');
+    Route::get('transaction', 'transaction')->name('transaction');
+});

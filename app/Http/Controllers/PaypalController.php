@@ -15,14 +15,15 @@ class PaypalController extends Controller
             'quantity' => 'required|int|min:1',
             'price' => 'required|int|min:1',
         ]);
+
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
         $response = $provider->createOrder([
             "intent" => "CAPTURE",
             "application_context" => [
-                "return_url" => route('success'),
-                "cancel_url" => route('cancel')
+                "return_url" => route('paypal.transaction'),
+                "cancel_url" => route('failed')
             ],
             "purchase_units" => [
                 [
@@ -42,12 +43,12 @@ class PaypalController extends Controller
                     return redirect()->away($link['href']);
                 }
             }
-            return redirect()->route('cancel');
+            return $this->failed();
         } else {
-            return redirect()->route('cancel');
+            return $this->failed();
         }
     }
-    public function success(Request $request)
+    public function transaction(Request $request)
     {
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
@@ -56,14 +57,14 @@ class PaypalController extends Controller
         //dd($response);
         if(isset($response['status']) && $response['status'] == 'COMPLETED') {
             return $this->saved($response); // Insert data into database
-            unset($_SESSION['product_name']); unset($_SESSION['quantity']);
+            session()->forget('product_name'); session()->forget('quantity');
         } else {
-            return redirect()->route('cancel');
+            return $this->failed();
         }
     }
-    public function cancel()
+    public function failed()
     {
-        return view('cancel', ['message' => 'Payment is cancelled.']);
+        return redirect()->route('failed', ['message' => 'Payment is cancelled.']);
     }
     public function saved($response)
     {
