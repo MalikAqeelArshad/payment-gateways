@@ -10,6 +10,10 @@ class PaypalController extends Controller
 {
     public function paypal(Request $request)
     {
+        if ($request->isMethod('get')) {
+            return view('form');
+        }
+        
         $request->validate([
             'product_name' => 'required|string|min:3',
             'quantity' => 'required|int|min:1',

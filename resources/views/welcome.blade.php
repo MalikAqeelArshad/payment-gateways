@@ -4,19 +4,18 @@
 
 @section('content')
 <div class="container">
-    <form action="{{ route('stripe.index') }}" method="post" style="margin: auto">
-        @csrf
-        <p><b>Product:</b> <input type="text" name="product_name" value="Title of the product"></p>
-        <p><b>Price:</b> <b style="position:relative;left:1rem;">$</b><input type="number" name="price" value="5"></p>
-        <input type="hidden" name="quantity" value="1">
-        <button type="submit" class="btn">Pay with Card</button>
-        @if ($errors->any())
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        @endif
-    </form>
+    <div style="margin:auto;">
+        <div class="card">
+            <h2 style="color:orangered;margin:0;">Stripe</h2>
+            <p>Pay with Stripe payment gateway</p>
+            <a href="{{ route('stripe.index') }}" class="btn">Pay with Stripe</a>
+        </div>
+        <hr>
+        <div class="card">
+            <h2 style="color:orangered;margin:0;">PayPal</h2>
+            <p>Pay with PayPal payment gateway</p>
+            <a href="{{ route('paypal.index') }}" class="btn">Pay with PayPal</a>
+        </div>
+    </div>
 </div>
 @endsection
